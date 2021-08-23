@@ -85,8 +85,8 @@ list_files_in_bucket <- function(bucket, prefix=NULL, max=NULL) {
     # for or there are no more to retrieve (no continuation token),
     # otherwise go again using the continuation token as a starting point
     # and reducing the max based on the number already retrieved.
-    if (objects$KeyCount >= max || identical(
-        objects$NextContinuationToken, character(0))) {
+    if (is.null(max) || (objects$KeyCount >= max) ||
+        identical(objects$NextContinuationToken, character(0))) {
       return(result)
     } else {
         max = max - objects$KeyCount
