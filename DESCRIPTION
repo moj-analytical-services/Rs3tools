@@ -1,18 +1,30 @@
 Package: labs3tools
-Title: What the Package Does (One Line, Title Case)
-Version: 0.0.0.9000
+Title: Helper tools to access Amazon S3, compatible with s3tools
+Version: 0.1.0
 Authors@R: 
-    person(given = "First",
-           family = "Last",
+    person(given = "Mike",
+           family = "Ratford",
            role = c("aut", "cre"),
-           email = "first.last@example.com",
-           comment = c(ORCID = "YOUR-ORCID-ID"))
+           email = "michael.ratford@digital.justice.gov.uk")
 Description: What the package does (one paragraph).
-License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
-    license
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
 Imports: 
-    magrittr
+    magrittr,
+    paws,
+    purrr,
+    dplyr,
+    tibble,
+    stringr,
+    glue,
+    gdata,
+    readxl,
+    haven,
+    tools,
+    utils
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
