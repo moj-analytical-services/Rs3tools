@@ -21,7 +21,7 @@
 
 #' Upload a file to S3 using multipart upload
 #'
-#' @param client A Paws S3 client object, e.g. from `paws::s3()`.
+#' @param client A Paws S3 client object, e.g. from `s3_svc()`.
 #' @param file The path to the file to be uploaded.
 #' @param bucket The name of the S3 bucket to be uploaded to, e.g. `my-bucket`.
 #' @param key The name to assign to the file in the S3 bucket, e.g. `path/to/file`.

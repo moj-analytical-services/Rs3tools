@@ -29,7 +29,7 @@ list_files_in_buckets <- function(bucket_filter=NULL, prefix=NULL, path_only=FAL
 list_files_in_bucket <- function(bucket, prefix=NULL, max=NULL) {
   result <- NULL
   continuation <- NULL
-  s3_svc <- paws::s3()
+  s3_svc <- s3_svc()
 
   # Repeatedly retrieve records until there are no more left or the
   # max has been reached
