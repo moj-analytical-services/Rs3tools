@@ -15,9 +15,9 @@ write_file_to_s3 <- function(local_file_path, s3_path, overwrite=FALSE, multipar
     tryCatch(
       {
         if (multipart) {
-          upload(paws::s3(), local_file_path, p$bucket, p$key)
+          upload(s3_svc(), local_file_path, p$bucket, p$key)
         } else {
-          paws::s3()$put_object(
+          s3_svc()$put_object(
             Body = local_file_path,
             Bucket = p$bucket,
             Key = p$key

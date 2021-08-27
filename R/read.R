@@ -11,7 +11,7 @@
 read_using <- function(FUN, s3_path, ...) {
   p <- parse_path(s3_path)
   tryCatch(
-    obj <- paws::s3()$get_object(Bucket = p$bucket, Key = p$key),
+    obj <- s3_svc()$get_object(Bucket = p$bucket, Key = p$key),
     error = function(c) {
       message("Could not read ", s3_path)
       stop(c)
@@ -101,7 +101,7 @@ s3_path_to_preview_df <- function(s3_path, ...) {
   } else {
     tryCatch(
       {
-        obj <- paws::s3()$get_object(Bucket = p$bucket, Key = p$key,
+        obj <- s3_svc()$get_object(Bucket = p$bucket, Key = p$key,
                                    Range = 'bytes=0-12000')
         read.csv(text = rawToChar(obj$Body), stringsAsFactors = FALSE) %>%
           head(n = 5)
@@ -130,7 +130,7 @@ download_file_from_s3 <- function(s3_path, local_path, overwrite=FALSE) {
 
   if (!(file.exists(local_path)) || overwrite) {
     tryCatch(
-      obj <- paws::s3()$get_object(Bucket = p$bucket, Key = p$key),
+      obj <- s3_svc()$get_object(Bucket = p$bucket, Key = p$key),
       error = function(c) {
         message("Could not read ", s3_path)
         stop(c)

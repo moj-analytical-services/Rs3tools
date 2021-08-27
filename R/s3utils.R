@@ -1,12 +1,7 @@
 REGION = "eu-west-1"
 
-if (Sys.getenv("AWS_REGION") == "")
-{
-  if (Sys.getenv("AWS_DEFAULT_REGION") != "") {
-    Sys.setenv("AWS_REGION" = Sys.getenv("AWS_DEFAULT_REGION"))
-  } else {
-    Sys.setenv("AWS_REGION" = REGION)
-  }
+s3_svc <- function(region = REGION, ...) {
+  paws::s3(config = list(region = REGION, ...))
 }
 
 parse_path <- function(s3_path) {
@@ -23,7 +18,7 @@ s3_file_exists <- function(s3_path) {
   exists <- FALSE
   try(
     {
-      paws::s3()$head_object(Bucket=p$bucket, Key=p$key)
+      s3_svc()$head_object(Bucket=p$bucket, Key=p$key)
       exists <- TRUE
     },
     silent=TRUE
