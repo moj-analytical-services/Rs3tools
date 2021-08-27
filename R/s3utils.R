@@ -1,7 +1,7 @@
 REGION = "eu-west-1"
 
-s3_svc <- function(region = REGION) {
-  paws::s3(config = list(region = REGION))
+s3_svc <- function(region = REGION, ...) {
+  paws::s3(config = list(region = REGION, ...))
 }
 
 parse_path <- function(s3_path) {
