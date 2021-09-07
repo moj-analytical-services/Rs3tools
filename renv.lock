@@ -450,5 +450,10 @@
       "Repository": "RSPM",
       "Hash": "d4d71a75dd3ea9eb5fa28cc21f9585e2"
     }
+  },
+  "Python": {
+    "Version": "3.8.5",
+    "Type": "virtualenv",
+    "Name": "./venv"
   }
 }
