@@ -10,7 +10,7 @@
 #' @examples labs3tools::read_using(FUN=readxl::read_excel, s3_path="alpha-test-team/mpg.xlsx")
 read_using <- function(FUN, s3_path, ...) {
   tryCatch(
-    botor::s3_read(full_s3_path(s3_path), FUN),
+    botor::s3_read(full_s3_path(s3_path), FUN, ...),
     error = function(c) {
       message("Could not read ", s3_path)
       stop(c)
@@ -92,10 +92,12 @@ s3_path_to_preview_df <- function(s3_path, ...) {
   } else {
     tryCatch(
       {
-        client <- botor::boto3$client("s3")
+        client <- botor::botor()$client("s3")
         obj <- client$get_object(Bucket = p$bucket, Key = p$key,
                                  Range = "bytes=0-12000")
-        read.csv(text = rawToChar(obj$Body), stringsAsFactors = FALSE) %>%
+        obj$Body$read()$decode() %>%
+          textConnection() %>%
+          read.csv() %>%
           head(n = 5)
       },
       error = function(c) {
@@ -120,7 +122,7 @@ s3_path_to_preview_df <- function(s3_path, ...) {
 download_file_from_s3 <- function(s3_path, local_path, overwrite=FALSE) {
   if (!(file.exists(local_path)) || overwrite) {
     tryCatch(
-      s3_download_file(full_s3_path(s3_path), local_path, force = overwrite),
+      botor::s3_download_file(full_s3_path(s3_path), local_path, force = overwrite),
       error = function(c) {
         message("Could not read ", s3_path)
         stop(c)

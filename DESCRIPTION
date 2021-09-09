@@ -11,7 +11,7 @@ Authors@R:
 Description: This library is mostly compatible with `s3tools`, which is being 
     retired as we migrate to the new version of the Analytical Platform, so you 
     can replace `s3tools` with `labs3tools` in your code and you should be good 
-    to go. NB `s3tools::accessible_buckets` is not yet implemented.
+    to go. NB `s3tools::accessible_buckets` is not implemented.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
@@ -27,7 +27,8 @@ Imports:
     glue,
     gdata,
     tools,
-    utils
+    utils,
+    httr
 Suggests: 
     testthat (>= 3.0.0),
     nycflights13,

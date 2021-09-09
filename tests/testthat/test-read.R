@@ -1,10 +1,10 @@
 BUCKET = "alpha-labs3tools"
 
-svc <- paws::s3(config = list(region = "eu-west-1"))
+svc <- botor::boto3$client('s3')
 for (ext in c("feather", "csv", "xlsx", "sav", "dta", "sas7bdat")) {
   filename <- glue::glue("flights.{ext}")
   fileloc <- system.file("testdata", filename, package = "labs3tools")
-  svc$put_object(Body = fileloc, Bucket = BUCKET, Key = filename)
+  svc$upload_file(Filename = fileloc, Bucket = BUCKET, Key = filename)
 }
 
 test_that("read_using works", {
