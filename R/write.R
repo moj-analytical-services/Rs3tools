@@ -42,7 +42,7 @@ write_file_to_s3 <- function(local_file_path, s3_path, overwrite=FALSE, multipar
 write_using <- function(x, f, s3_path, overwrite=FALSE, multipart=TRUE, ...) {
   if (overwrite || !(s3_file_exists(s3_path))) {
     tryCatch(
-      s3_write(x, f, full_s3_path(s3_path), ...),
+      botor::s3_write(x, f, full_s3_path(s3_path), ...),
       error = function(c) {
         message(glue::glue("Could not upload {local_file_path} to {s3_path}"),
                 appendLF = TRUE)
@@ -85,7 +85,7 @@ write_df_to_csv_in_s3 <- function(df, s3_path, overwrite=FALSE, multipart=TRUE, 
 #'
 #' @examples write_df_to_table_in_s3(df, "alpha-everyone/delete/my_csv.csv")
 write_df_to_table_in_s3 <- function(df, s3_path, overwrite=FALSE, multipart=TRUE, sep=",", ...) {
-  write_using(df, write.table, s3_path, overwrite=overwrite, multipart=multipart, ...)
+  write_using(df, write.table, s3_path, overwrite=overwrite, sep=sep, ...)
 }
 
 
