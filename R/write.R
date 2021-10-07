@@ -42,7 +42,13 @@ write_file_to_s3 <- function(local_file_path, s3_path, overwrite=FALSE, multipar
 write_using <- function(x, f, s3_path, overwrite=FALSE, multipart=TRUE, ...) {
   if (overwrite || !(s3_file_exists(s3_path))) {
     tryCatch(
-      botor::s3_write(x, f, full_s3_path(s3_path), ...),
+      {
+        fext <- tools::file_ext(s3_path)
+        tmp_location <- tempfile(fileext = fext)
+        f(x, tmp_location, ...)
+        botor::s3_upload_file(tmp_location, full_s3_path(s3_path))
+        unlink(tmp_location)
+      },
       error = function(c) {
         message(glue::glue("Could not upload {local_file_path} to {s3_path}"),
                 appendLF = TRUE)
