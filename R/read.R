@@ -10,7 +10,12 @@
 #' @examples labs3tools::read_using(FUN=readxl::read_excel, s3_path="alpha-test-team/mpg.xlsx")
 read_using <- function(FUN, s3_path, ...) {
   tryCatch(
-    botor::s3_read(full_s3_path(s3_path), FUN, ...),
+    {
+      fext <- tools::file_ext(s3_path)
+      tmp_location <- tempfile(fileext = fext)
+      botor::s3_download_file(full_s3_path(s3_path), tmp_location)
+      return(FUN(tmp_location))
+    },
     error = function(c) {
       message("Could not read ", s3_path)
       stop(c)
