@@ -50,7 +50,7 @@ write_using <- function(x, f, s3_path, overwrite=FALSE, multipart=TRUE, ...) {
         unlink(tmp_location)
       },
       error = function(c) {
-        message(glue::glue("Could not upload {local_file_path} to {s3_path}"),
+        message(glue::glue("Could not upload {tmp_location} to {s3_path}"),
                 appendLF = TRUE)
         stop(c, appendLF = TRUE)
       }
