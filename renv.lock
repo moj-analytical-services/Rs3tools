@@ -62,13 +62,6 @@
       "Repository": "RSPM",
       "Hash": "9fe98599ca456d6552421db0d6772d8f"
     },
-    "botor": {
-      "Package": "botor",
-      "Version": "0.3.0",
-      "Source": "Repository",
-      "Repository": "RSPM",
-      "Hash": "dc6ab51cf3922fdc38421f4dc79fd2af"
-    },
     "brio": {
       "Package": "brio",
       "Version": "1.1.2",
@@ -265,13 +258,6 @@
       "Repository": "RSPM",
       "Hash": "3471fb65971f1a7b2d4ae7848cf2db8d"
     },
-    "logger": {
-      "Package": "logger",
-      "Version": "0.2.1",
-      "Source": "Repository",
-      "Repository": "RSPM",
-      "Hash": "737c5ce5d716ca411c7b6f8c009006c7"
-    },
     "lubridate": {
       "Package": "lubridate",
       "Version": "1.8.0",
@@ -314,26 +300,110 @@
       "Repository": "RSPM",
       "Hash": "f1b1ca1254ccb485dccc9c0dc65a2c36"
     },
-    "pillar": {
-      "Package": "pillar",
-      "Version": "1.6.2",
+    "paws": {
+      "Package": "paws",
+      "Version": "0.1.12",
       "Source": "Repository",
       "Repository": "RSPM",
-      "Hash": "43f228eb4b49093d1c8a5c93cae9efe9"
+      "Hash": "ebefb0931dd88cb25ea4ddb3b4f116ac"
     },
-    "pkgconfig": {
-      "Package": "pkgconfig",
-      "Version": "2.0.3",
+    "paws.analytics": {
+      "Package": "paws.analytics",
+      "Version": "0.1.12",
       "Source": "Repository",
       "Repository": "RSPM",
-      "Hash": "01f28d4278f15c76cddbea05899c5d6f"
+      "Hash": "cb8bfd9ff536e7c45a68cdaa8a16785d"
     },
-    "pkgload": {
-      "Package": "pkgload",
-      "Version": "1.2.1",
+    "paws.application.integration": {
+      "Package": "paws.application.integration",
+      "Version": "0.1.12",
       "Source": "Repository",
       "Repository": "RSPM",
-      "Hash": "463642747f81879e6752485aefb831cf"
+      "Hash": "34f07c3560815aa06d4caed310a0948e"
+    },
+    "paws.common": {
+      "Package": "paws.common",
+      "Version": "0.3.13",
+      "Source": "Repository",
+      "Repository": "RSPM",
+      "Hash": "4d820add0e951913c59bae575b35492b"
+    },
+    "paws.compute": {
+      "Package": "paws.compute",
+      "Version": "0.1.12",
+      "Source": "Repository",
+      "Repository": "RSPM",
+      "Hash": "f49fcb2cbb146d23d933b2314b73691b"
+    },
+    "paws.cost.management": {
+      "Package": "paws.cost.management",
+      "Version": "0.1.12",
+      "Source": "Repository",
+      "Repository": "RSPM",
+      "Hash": "43f79668a95339920a2662c153984d4b"
+    },
+    "paws.customer.engagement": {
+      "Package": "paws.customer.engagement",
+      "Version": "0.1.12",
+      "Source": "Repository",
+      "Repository": "RSPM",
+      "Hash": "239ad7681de6284d0afc8f07bdf824e5"
+    },
+    "paws.database": {
+      "Package": "paws.database",
+      "Version": "0.1.12",
+      "Source": "Repository",
+      "Repository": "RSPM",
+      "Hash": "2f861a7af3ba272f4ed892c9c2734ac2"
+    },
+    "paws.developer.tools": {
+      "Package": "paws.developer.tools",
+      "Version": "0.1.12",
+      "Source": "Repository",
+      "Repository": "RSPM",
+      "Hash": "1378a14ce5711dcdc385aa5be56968a4"
+    },
+    "paws.end.user.computing": {
+      "Package": "paws.end.user.computing",
+      "Version": "0.1.12",
+      "Source": "Repository",
+      "Repository": "RSPM",
+      "Hash": "e051ba94a19e5a530aed100bbcb19537"
+    },
+    "paws.machine.learning": {
+      "Package": "paws.machine.learning",
+      "Version": "0.1.12",
+      "Source": "Repository",
+      "Repository": "RSPM",
+      "Hash": "bca1b3dedc8842d230119420ed370bc9"
+    },
+    "paws.management": {
+      "Package": "paws.management",
+      "Version": "0.1.12",
+      "Source": "Repository",
+      "Repository": "RSPM",
+      "Hash": "5235cb3d225a6e83a101e2327f1a69c4"
+    },
+    "paws.networking": {
+      "Package": "paws.networking",
+      "Version": "0.1.12",
+      "Source": "Repository",
+      "Repository": "RSPM",
+      "Hash": "4a7f1431dabf35192c9fcbe8a0e9265c"
+    },
+    "paws.security.identity": {
+      "Package": "paws.security.identity",
+      "Version": "0.1.12",
+      "Source": "Repository",
+      "Repository": "RSPM",
+      "Hash": "4daa4381ae249e3bd995f1bad49aa836"
+    },
+    "paws.storage": {
+      "Package": "paws.storage",
+      "Version": "0.1.12",
+      "Source": "Repository",
+      "Repository": "RSPM",
+      "Hash": "533b13818105b2cff51ae444070e62f6"
     },
     "png": {
       "Package": "png",
@@ -341,6 +411,20 @@
       "Source": "Repository",
       "Repository": "RSPM",
       "Hash": "03b7076c234cb3331288919983326c55"
+    },
+    "praise": {
+      "Package": "praise",
+      "Version": "1.0.0",
+      "Source": "Repository",
+      "Repository": "RSPM",
+      "Hash": "a555924add98c99d2f411e37e7d25e9f"
+    },
+    "pkgload": {
+      "Package": "pkgload",
+      "Version": "1.2.1",
+      "Source": "Repository",
+      "Repository": "RSPM",
+      "Hash": "463642747f81879e6752485aefb831cf"
     },
     "praise": {
       "Package": "praise",
@@ -543,6 +627,14 @@
       "Version": "2.2.0",
       "Source": "Repository",
       "Repository": "RSPM",
+      "Hash": "d4d71a75dd3ea9eb5fa28cc21f9585e2"
+    },
+    "zip": {
+      "Package": "zip",
+      "Version": "2.2.0",
+      "Source": "Repository",
+      "Repository": "RSPM",
+
       "Hash": "c7eef2996ac270a18c2715c997a727c5"
     }
   }
