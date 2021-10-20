@@ -1,25 +1,30 @@
 Package: labs3tools
 Title: Helper tools to access Amazon S3, compatible with s3tools
-Version: 0.3.1
+Version: 0.3.2
 Authors@R: 
     c(person(given = "Mike",
              family = "Ratford",
              role = c("aut", "cre"),
              email = "michael.ratford@digital.justice.gov.uk"),
       person(given = "Ministry of Justice",
+             role = "cph"),
+      person(given = "David",
+             family = "Kretch",
+             role = c("cph")),
+      person(given = "Adam",
+             family = "Banker",
+             role = c("cph")),
+      person(given = "Amazon.com, Inc.",
              role = "cph"))
-Description: This library is mostly compatible with `s3tools`, which is being 
-    retired as we migrate to the new version of the Analytical Platform, so you 
-    can replace `s3tools` with `Rs3tools` in your code and you should be good 
-    to go. NB `s3tools::accessible_buckets` is not implemented.
-License: MIT + file LICENSE
+Description: What the package does (one paragraph).
+License: Apache License (>= 2)
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
 Imports: 
     magrittr,
-    botor,
+    paws,
     purrr,
     dplyr,
     tibble,
@@ -27,8 +32,7 @@ Imports:
     glue,
     gdata,
     tools,
-    utils,
-    httr
+    utils
 Suggests: 
     testthat (>= 3.0.0),
     nycflights13,
