@@ -1,4 +1,4 @@
-# labs3tools
+# Rs3tools
 
 Helper tools to access Amazon S3, compatible with 
 [s3tools](https://github.com/moj-analytical-services/s3tools).
@@ -13,18 +13,21 @@ Code using it will gradually be replaced with `botor`, `arrow`, etc.
 This library is mostly compatible with `s3tools`, which is being retired as we
 migrate to the new version of the Analytical Platform, so you can replace 
 `s3tools` with `labs3tools` in your code and you should be good to go. 
+
 NB `s3tools::accessible_buckets` is not yet implemented.
 
-### Installation
-Python and [boto3](https://boto3.amazonaws.com/v1/documentation/api/latest/index.html) 
-need to be installed.
+This is based on the [paws library](https://paws-r.github.io/) which has the
+advantage that it's R-native and doesn't depend on reticulated Python libraries.
+However it reauthenticates with AWS for every function call which introduces
+a small amount of latency.
 
+### Installation
 In an `renv` initiated project
 ```
-renv::install("git@github.com:moj-analytical-services/labs3tools.git")
+renv::install("git@github.com:moj-analytical-services/Rs3tools.git")
 ```
 otherwise
 ```
-remotes::install_github("git@github.com:moj-analytical-services/labs3tools.git")
+remotes::install_github("git@github.com:moj-analytical-services/Rs3tools.git")
 ```
 
