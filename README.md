@@ -12,7 +12,7 @@ Code using it will gradually be replaced with `botor`, `arrow`, etc.
 ### What does this do?
 This library is mostly compatible with `s3tools`, which is being retired as we
 migrate to the new version of the Analytical Platform, so you can replace 
-`s3tools` with `labs3tools` in your code and you should be good to go. 
+`s3tools` with `Rs3tools` in your code and you should be good to go. 
 
 NB `s3tools::accessible_buckets` is not yet implemented.
 
