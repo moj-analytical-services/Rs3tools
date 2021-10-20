@@ -1,6 +1,6 @@
 Package: labs3tools
 Title: Helper tools to access Amazon S3, compatible with s3tools
-Version: 0.3.0
+Version: 0.3.1
 Authors@R: 
     c(person(given = "Mike",
              family = "Ratford",
@@ -10,7 +10,7 @@ Authors@R:
              role = "cph"))
 Description: This library is mostly compatible with `s3tools`, which is being 
     retired as we migrate to the new version of the Analytical Platform, so you 
-    can replace `s3tools` with `labs3tools` in your code and you should be good 
+    can replace `s3tools` with `Rs3tools` in your code and you should be good 
     to go. NB `s3tools::accessible_buckets` is not implemented.
 License: MIT + file LICENSE
 Encoding: UTF-8

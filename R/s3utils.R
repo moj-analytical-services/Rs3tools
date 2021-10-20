@@ -29,15 +29,6 @@ s3_svc <- function(region = REGION, ...) {
   )
 }
 
-
-full_s3_path <- function(s3_path) {
-  if (stringr::str_detect(s3_path, "^s3://")) {
-    return(s3_path)
-  } else {
-    return(glue::glue("s3://{s3_path}"))
-  }
-}
-
 parse_path <- function(s3_path) {
   s3_path <- stringr::str_replace(s3_path, "s3://", "")
   split_path <- stringr::str_split(s3_path, "/")[[1]]
@@ -48,5 +39,14 @@ parse_path <- function(s3_path) {
 }
 
 s3_file_exists <- function(s3_path) {
-  botor::s3_exists(full_s3_path(s3_path))
+  p <- parse_path(s3_path)
+  exists <- FALSE
+  try(
+    {
+      s3_svc()$head_object(Bucket=p$bucket, Key=p$key)
+      exists <- TRUE
+    },
+    silent=TRUE
+  )
+  return(exists)
 }

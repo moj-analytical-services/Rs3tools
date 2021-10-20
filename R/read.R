@@ -9,19 +9,23 @@
 #'
 #' @examples labs3tools::read_using(FUN=readxl::read_excel, s3_path="alpha-test-team/mpg.xlsx")
 read_using <- function(FUN, s3_path, ...) {
+  p <- parse_path(s3_path)
   tryCatch(
-    {
-      fext <- tools::file_ext(s3_path)
-      tmp_location <- tempfile(fileext = fext)
-      botor::s3_download_file(full_s3_path(s3_path), tmp_location)
-      return(FUN(tmp_location))
-    },
+    obj <- s3_svc()$get_object(Bucket = p$bucket, Key = p$key),
     error = function(c) {
       message("Could not read ", s3_path)
       stop(c)
     }
   )
+
+  fext <- tools::file_ext(p$key)
+  tmp_location <- tempfile(fileext = fext)
+  writeBin(obj$Body, con = tmp_location)
+  on.exit(unlink(tmp_location))
+
+  FUN(tmp_location, ...)
 }
+
 
 #' Read a full file from S3, using the full path to the file including the
 #' bucketname.
@@ -97,12 +101,9 @@ s3_path_to_preview_df <- function(s3_path, ...) {
   } else {
     tryCatch(
       {
-        client <- botor::botor()$client("s3")
-        obj <- client$get_object(Bucket = p$bucket, Key = p$key,
-                                 Range = "bytes=0-12000")
-        obj$Body$read()$decode() %>%
-          textConnection() %>%
-          read.csv() %>%
+        obj <- s3_svc()$get_object(Bucket = p$bucket, Key = p$key,
+                                   Range = 'bytes=0-12000')
+        read.csv(text = rawToChar(obj$Body), stringsAsFactors = FALSE) %>%
           head(n = 5)
       },
       error = function(c) {
@@ -123,11 +124,13 @@ s3_path_to_preview_df <- function(s3_path, ...) {
 #' @return NULL
 #' @export
 #'
-#' @examples s3tools:::download_file_from_s3("alpha-everyone/iris.csv", "iris.csv", overwrite =TRUE)
+#' @examples s3tools:::download_file_from_s3("alpha-everyone/iris.csv", "iris.csv", overwrit =TRUE)
 download_file_from_s3 <- function(s3_path, local_path, overwrite=FALSE) {
+  p <- parse_path(s3_path)
+
   if (!(file.exists(local_path)) || overwrite) {
     tryCatch(
-      botor::s3_download_file(full_s3_path(s3_path), local_path, force = overwrite),
+      obj <- s3_svc()$get_object(Bucket = p$bucket, Key = p$key),
       error = function(c) {
         message("Could not read ", s3_path)
         stop(c)
@@ -136,4 +139,12 @@ download_file_from_s3 <- function(s3_path, local_path, overwrite=FALSE) {
   } else {
     stop("The file already exists locally and you didn't specify overwrite=TRUE")
   }
+
+  tryCatch(
+    writeBin(obj$Body, con = local_path),
+    error = function(c) {
+      message("Could not write to ", local_path)
+      stop(c)
+    }
+  )
 }
