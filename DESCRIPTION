@@ -1,6 +1,6 @@
 Package: Rs3tools
 Title: Helper tools to access Amazon S3, compatible with s3tools
-Version: 0.3.3
+Version: 0.3.4
 Authors@R: 
     c(person(given = "Mike",
              family = "Ratford",
@@ -33,7 +33,8 @@ Imports:
     gdata,
     tools,
     utils,
-    httr
+    httr,
+    readr
 Suggests: 
     testthat (>= 3.0.0),
     nycflights13,
