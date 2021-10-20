@@ -1,6 +1,6 @@
 BUCKET = "alpha-labs3tools"
 
-svc <- paws::s3(config = list(region = "eu-west-1"))
+svc <- s3_svc()
 for (ext in c("feather", "csv", "xlsx", "sav", "dta", "sas7bdat")) {
   filename <- glue::glue("flights.{ext}")
   fileloc <- system.file("testdata", filename, package = "labs3tools")
