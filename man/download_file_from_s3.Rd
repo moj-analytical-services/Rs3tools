@@ -21,5 +21,5 @@ download_file_from_s3(s3_path, local_path, overwrite = FALSE)
 Download a file from s3 to somewhere in your home directory
 }
 \examples{
-s3tools:::download_file_from_s3("alpha-everyone/iris.csv", "iris.csv", overwrit =TRUE)
+Rs3tools:::download_file_from_s3("alpha-everyone/iris.csv", "iris.csv", overwrite =TRUE)
 }
