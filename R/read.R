@@ -7,7 +7,7 @@
 #' @return whatever the function returns
 #' @export
 #'
-#' @examples R3tools::read_using(FUN=readxl::read_excel, s3_path="alpha-test-team/mpg.xlsx")
+#' @examples Rs3tools::read_using(FUN=readxl::read_excel, s3_path="alpha-test-team/mpg.xlsx")
 read_using <- function(FUN, s3_path, ...) {
   p <- parse_path(s3_path)
   tryCatch(
