@@ -1,4 +1,4 @@
 library(testthat)
-library(labs3tools)
+library(Rs3tools)
 
-test_check("labs3tools")
+test_check("Rs3tools")

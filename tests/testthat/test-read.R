@@ -1,22 +1,51 @@
-BUCKET = "alpha-labs3tools"
+library(magrittr)
 
+BUCKET = "alpha-everyone"
 svc <- s3_svc()
-for (ext in c("feather", "csv", "xlsx", "sav", "dta", "sas7bdat")) {
-  filename <- glue::glue("flights.{ext}")
-  fileloc <- system.file("testdata", filename, package = "labs3tools")
-  svc$put_object(Body = fileloc, Bucket = BUCKET, Key = filename)
-}
 
-test_that("read_using works", {
-  expect_equal(
-    read_using(feather::read_feather, glue::glue('{BUCKET}/flights.feather')),
-    nycflights13::flights
-    )
-  expect_equal(
-    read_using(readr::read_csv, glue::glue('{BUCKET}/flights.csv'),
-               locale = readr::locale(tz = "America/New_York"),
-               show_col_types = FALSE),
-    nycflights13::flights
+flights <- nycflights13::flights %>%
+  dplyr::mutate(time_hour = lubridate::with_tz(time_hour, tzone="UTC"))
+
+list(
+  list(f = feather::write_feather, ext = "feather"),
+  list(f = readr::write_csv, ext = "csv"),
+  list(f = haven::write_sav, ext = "sav"),
+  list(f = haven::write_dta, ext = "dta"),
+  list(f = haven::write_sas, ext = "sas7bdat"),
+  list(f = openxlsx::write.xlsx, ext = "xlsx")
+) %>%
+  purrr::walk(
+    function(x) {
+      write_using(
+        flights,
+        x$f,
+        glue::glue('{BUCKET}/Rs3tools/flights.{x$ext}'),
+        overwrite = TRUE
+      )
+    }
   )
 
+test_that("write_read_using works", {
+  expect_equal(
+    read_using(
+      feather::read_feather,
+      glue::glue('{BUCKET}/Rs3tools/flights.feather')
+    ),
+    flights
+  )
+
+  expect_equal(
+    read_using(readr::read_csv, glue::glue('{BUCKET}/Rs3tools/flights.csv'),
+               # locale = readr::locale(tz = "America/New_York"),
+               show_col_types = FALSE),
+    flights
+  )
+
+  expect_equal(
+    read_using(
+      readxl::read_excel,
+      glue::glue('{BUCKET}/Rs3tools/flights.xlsx')
+    ),
+    flights
+  )
 })
