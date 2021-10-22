@@ -20,5 +20,5 @@ whatever the function returns
 Read from S3 using a particular function
 }
 \examples{
-s3tools:::read_using(FUN=readxl::read_excel, s3_path="alpha-test-team/mpg.xlsx")
+R3tools::read_using(FUN=readxl::read_excel, s3_path="alpha-test-team/mpg.xlsx")
 }

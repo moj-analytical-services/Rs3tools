@@ -7,7 +7,7 @@
 #' @return whatever the function returns
 #' @export
 #'
-#' @examples labs3tools::read_using(FUN=readxl::read_excel, s3_path="alpha-test-team/mpg.xlsx")
+#' @examples Rs3tools::read_using(FUN=readxl::read_excel, s3_path="alpha-test-team/mpg.xlsx")
 read_using <- function(FUN, s3_path, ...) {
   p <- parse_path(s3_path)
   tryCatch(
@@ -124,7 +124,7 @@ s3_path_to_preview_df <- function(s3_path, ...) {
 #' @return NULL
 #' @export
 #'
-#' @examples s3tools:::download_file_from_s3("alpha-everyone/iris.csv", "iris.csv", overwrit =TRUE)
+#' @examples Rs3tools:::download_file_from_s3("alpha-everyone/iris.csv", "iris.csv", overwrite =TRUE)
 download_file_from_s3 <- function(s3_path, local_path, overwrite=FALSE) {
   p <- parse_path(s3_path)
 
