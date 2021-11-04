@@ -3,7 +3,7 @@
 Helper tools to access Amazon S3, compatible with 
 [s3tools](https://github.com/moj-analytical-services/s3tools).
 
-## WARNING - DO NOT USE
+## WARNING
 This library is experimental and unsupported. It is intended to aid the 
 prisons data science team in the short term with the migration of multiple apps 
 and airflow tasks to the new version of the Analytical Platform. 
@@ -22,12 +22,7 @@ However to avoid time outs it reauthenticates with AWS for every function call
 which introduces a small amount of latency.
 
 ### Installation
-In an `renv` initiated project
 ```
-renv::install("git@github.com:moj-analytical-services/Rs3tools.git")
-```
-otherwise
-```
-remotes::install_github("git@github.com:moj-analytical-services/Rs3tools.git")
+remotes::install_github("moj-analytical-services/Rs3tools")
 ```
 
