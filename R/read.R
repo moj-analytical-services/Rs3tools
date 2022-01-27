@@ -50,8 +50,8 @@ read_using <- function(FUN, s3_path, ...) {
 #' @examples filelocation <- s3_read_path_to_df("alpha-moj-analytics-scratch/folder/file.png")
 s3_path_to_full_df <- function(s3_path, ...) {
   handle_default <- function(tmp_location) {
-    message("labs3tools cannot parse this file automatically")
-    message("If you want to specify your own reading function see labs3tools::read_using()")
+    message("Rs3tools cannot parse this file automatically")
+    message("If you want to specify your own reading function see Rs3tools::read_using()")
     message("or use the file path provided by this function.")
     message(stringr::str_glue("Your file is available at: {tmp_location}"))
     tmp_location
