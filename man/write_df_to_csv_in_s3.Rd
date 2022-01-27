@@ -2,7 +2,7 @@
 % Please edit documentation in R/write.R
 \name{write_df_to_csv_in_s3}
 \alias{write_df_to_csv_in_s3}
-\title{Write an in-memory data frame to a csv file stored in S3}
+\title{Write a data frame to a csv file stored in S3}
 \usage{
 write_df_to_csv_in_s3(df, s3_path, overwrite = FALSE, multipart = TRUE, ...)
 }
@@ -19,7 +19,7 @@ write_df_to_csv_in_s3(df, s3_path, overwrite = FALSE, multipart = TRUE, ...)
 Returns nothing
 }
 \description{
-Write an in-memory data frame to a csv file stored in S3
+Write a data frame to a csv file stored in S3
 }
 \examples{
 write_df_to_csv_in_s3(df, "alpha-everyone/delete/my_csv.csv")

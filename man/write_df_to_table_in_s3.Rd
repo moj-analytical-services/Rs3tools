@@ -2,7 +2,7 @@
 % Please edit documentation in R/write.R
 \name{write_df_to_table_in_s3}
 \alias{write_df_to_table_in_s3}
-\title{Write an in-memory data frame to a csv file stored in S3}
+\title{Write a data frame to a csv file stored in S3}
 \usage{
 write_df_to_table_in_s3(
   df,

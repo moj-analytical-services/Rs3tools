@@ -1,5 +1,16 @@
 REGION = "eu-west-1"
 
+#' Obtain a paws S3 client using MoJ AP defaults.
+#'
+#' This function should be called each time you would use a paws::s3 client. It
+#' sets the default region and handles authentication for the Analytical
+#' Platform.
+#'
+#' @return paws::s3 client
+#' @export
+#'
+#' @examples
+#' Rs3tools::s3_svc()$put_object(Body = "filetoupload", Bucket = "examplebucket", Key = "objectkey")
 s3_svc <- function(region = REGION, ...) {
   aws_role_arn <- Sys.getenv('AWS_ROLE_ARN')
 

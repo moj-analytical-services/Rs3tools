@@ -21,7 +21,6 @@ write_file_to_s3 <- function(local_file_path, s3_path, overwrite=FALSE, multipar
             Body = local_file_path,
             Bucket = p$bucket,
             Key = p$key
-            # ServerSideEncryption = "AES256",
           )
         }
       },
