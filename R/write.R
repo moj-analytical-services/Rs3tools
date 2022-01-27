@@ -60,7 +60,7 @@ write_using <- function(x, f, s3_path, overwrite=FALSE, multipart=TRUE, ...) {
 }
 
 
-#' Write an in-memory data frame to a csv file stored in S3
+#' Write a data frame to a csv file stored in S3
 #'
 #' @param df A data frame you want to upload to S3.
 #' @param s3_path A character string containing the full path to where the file should be stored in S3, including any directory names and the bucket name.
@@ -75,7 +75,7 @@ write_df_to_csv_in_s3 <- function(df, s3_path, overwrite=FALSE, multipart=TRUE, 
 }
 
 
-#' Write an in-memory data frame to a csv file stored in S3
+#' Write a data frame to a csv file stored in S3
 #'
 #' @description This function is similar to \code{\link{write_df_to_csv_in_s3}} but uses \code{\link[utils]{write.table}} to write the data frame to a csv as opposed to \code{\link[utils]{write.csv}}. This allows the following additional arguments to be passed to \code{\link[utils]{write.table}}: \code{append}, \code{col.names}, \code{sep}, \code{dec}, \code{qmethod}.
 #'
