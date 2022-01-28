@@ -1,33 +1,43 @@
 # Rs3tools
 
-Helper tools to access Amazon S3, compatible with 
-[s3tools](https://github.com/moj-analytical-services/s3tools).
+Helper tools to access Amazon S3 on the Analytical Platform, compatible with 
+[s3tools](https://github.com/moj-analytical-services/s3tools). 
 
-## WARNING - DO NOT USE
-This library is experimental and unsupported. It is intended to aid the 
-prisons data science team in the short term with the migration of multiple apps 
-and airflow tasks to the new version of the Analytical Platform. 
-Code using it will gradually be replaced with `botor`, `arrow`, etc.
+This is based on 
+the [paws library](https://paws-r.github.io/) which has the
+advantage that it's R-native and doesn't depend on reticulated Python libraries.
+
+## Warning
+Please note that this is not officially supported by the AP team and is 
+intended to be community supported.
 
 ### What does this do?
 This library is mostly compatible with `s3tools`, which is being retired as we
 migrate to the new version of the Analytical Platform, so you can replace 
-`s3tools` with `Rs3tools` in your code and you should be good to go. 
+`s3tools` with `Rs3tools` in your code and you should be good to go. For
+documentation 
+[see the s3tools homepage](https://github.com/moj-analytical-services/s3tools).
 
-NB `s3tools::accessible_buckets` is not yet implemented.
+Additionally there is a function `write_using`, e.g.
+```R
+write_using(
+  my_dataframe, 
+  feather::write_feather, 
+  "alpha-everyone/delete/my_feather.feather",
+  overwrite=TRUE,
+  multipart=TRUE
+)
+```
 
-This is based on the [paws library](https://paws-r.github.io/) which has the
-advantage that it's R-native and doesn't depend on reticulated Python libraries.
-However to avoid time outs it reauthenticates with AWS for every function call 
-which introduces a small amount of latency.
+NB `s3tools::accessible_buckets` is not implemented.
 
 ### Installation
 In an `renv` initiated project
 ```
-renv::install("git@github.com:moj-analytical-services/Rs3tools.git")
+renv::install("moj-analytical-services/Rs3tools")
 ```
 otherwise
 ```
-remotes::install_github("git@github.com:moj-analytical-services/Rs3tools.git")
+remotes::install_github("moj-analytical-services/Rs3tools")
 ```
 
