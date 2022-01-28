@@ -1,4 +1,5 @@
 REGION = "eu-west-1"
+SESSIONDURATIONSECONDS = "3600" # default 3600, minimum 900 (useful for testing)
 
 # Checks if an expiry time has been reached, allowing for a window of five
 # minutes by default
@@ -10,58 +11,79 @@ expired_auth <- function(expiry_t, window = 5 * 60) {
   )
 }
 
-s3_svc <- function(region = REGION, ...) {
-  # If the S3 service is yet to be set or the credentials are about to
-  # expire, get new credentials
-  if (is.null(Rs3tools.env$s3) |
-      (Rs3tools.env$temporary_authentication
-       & expired_auth(Rs3tools.env$authentication_expiry))) {
-    aws_role_arn <- Sys.getenv('AWS_ROLE_ARN')
+s3_gen <- function(){
 
-    # Check if the user has the AWS_ROLE_ARN environment variable set
-    # and if set: force paws to use the AssumeRoleWithWebIdentity auth method
-    # if not set: let paws choose an auth method based on its own defaults
-    if (nchar(aws_role_arn) > 0) {
+  ## Create the state variables which will keep track of the system
+  # S3 service
+  Rs3tools.s3 <- NULL
+  # Will credentials need reauthentication (i.e. not handled by paws)?
+  Rs3tools.temporary_authentication <- FALSE
+  # Expiration of current credentials, if needed
+  Rs3tools.authentication_expiry <- NULL
 
-      user <- stringr::str_split(aws_role_arn, '/')[[1]][2]
-      role_session_name = glue::glue("{user}_{as.numeric(Sys.time())}")
-      query = glue::glue(
-        "https://sts.amazonaws.com/",
-        "?Action=AssumeRoleWithWebIdentity",
-        "&RoleSessionName={role_session_name}",
-        "&RoleArn={aws_role_arn}",
-        "&WebIdentityToken={readr::read_file(Sys.getenv('AWS_WEB_IDENTITY_TOKEN_FILE'))}",
-        "&Version=2011-06-15"
-      )
-      response <- httr::POST(query)
-      credentials <- httr::content(response)$AssumeRoleWithWebIdentityResponse$AssumeRoleWithWebIdentityResult$Credentials
-      Rs3tools.env$temporary_authentication <- TRUE
-      Rs3tools.env$authentication_expiry <-
-        as.POSIXct(credentials$Expiration, origin = "1970-01-01", tz="UTC")
+  ## Returns a function which both returns the required s3 object
+  ## and super assigns it (and the other state variables) to the variables above
+  function(region = REGION, ...) {
+    # If the S3 service is yet to be set or the credentials are about to
+    # expire, get new credentials
+    if (is.null(Rs3tools.s3) |
+        (Rs3tools.temporary_authentication
+         & expired_auth(Rs3tools.authentication_expiry))) {
 
-      Rs3tools.env$s3 <- paws::s3(
-        config = list(
-          credentials = list(
-            creds = list(
-              access_key_id = credentials$AccessKeyId,
-              secret_access_key = credentials$SecretAccessKey,
-              session_token = credentials$SessionToken
-            )
-          ),
-          region = region
+      if (!is.null(Rs3tools.s3)) message("Refreshing credentials with AWS")
+      aws_role_arn <- Sys.getenv('AWS_ROLE_ARN')
+
+      # Check if the user has the AWS_ROLE_ARN environment variable set
+      # and if set: force paws to use the AssumeRoleWithWebIdentity auth method
+      # if not set: let paws choose an auth method based on its own defaults
+      if (nchar(aws_role_arn) > 0) {
+
+        user <- stringr::str_split(aws_role_arn, '/')[[1]][2]
+        role_session_name = glue::glue("{user}_{as.numeric(Sys.time())}")
+        query = glue::glue(
+          "https://sts.amazonaws.com/",
+          "?Action=AssumeRoleWithWebIdentity",
+          "&DurationSeconds={SESSIONDURATIONSECONDS}",
+          "&RoleSessionName={role_session_name}",
+          "&RoleArn={aws_role_arn}",
+          "&WebIdentityToken={readr::read_file(Sys.getenv('AWS_WEB_IDENTITY_TOKEN_FILE'))}",
+          "&Version=2011-06-15"
         )
-      )
-    } else {
+        response <- httr::POST(query)
+        credentials <- httr::content(response)$AssumeRoleWithWebIdentityResponse$AssumeRoleWithWebIdentityResult$Credentials
+        Rs3tools.temporary_authentication <<- TRUE
+        Rs3tools.authentication_expiry <<-
+          as.POSIXct(credentials$Expiration, origin = "1970-01-01", tz="UTC")
 
-      # This doesn't specify the configuration except the region
-      # so paws will use its own default methods to choose the auth
-      Rs3tools.env$s3 <- paws::s3(config=list(region=REGION))
+        Rs3tools.s3 <<- paws::s3(
+          config = list(
+            credentials = list(
+              creds = list(
+                access_key_id = credentials$AccessKeyId,
+                secret_access_key = credentials$SecretAccessKey,
+                session_token = credentials$SessionToken
+              )
+            ),
+            region = region
+          )
+        )
+      } else {
 
+        # This doesn't specify the configuration except the region
+        # so paws will use its own default methods to choose the auth
+        Rs3tools.s3 <<- paws::s3(config=list(region=REGION))
+
+      }
     }
+
+    return(Rs3tools.s3)
   }
 
-  return(Rs3tools.env$s3)
 }
+
+# This creates the s3_svc function which carries its own state environment
+# as defined above
+s3_svc <- s3_gen()
 
 parse_path <- function(s3_path) {
   s3_path <- stringr::str_replace(s3_path, "s3://", "")
