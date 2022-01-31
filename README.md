@@ -36,7 +36,6 @@ Rs3tools::refresh_credentials()
 NB `s3tools::accessible_buckets` is not implemented.
 
 ### Installation
-In an `renv` initiated project
 ```
 renv::install("moj-analytical-services/Rs3tools")
 ```
