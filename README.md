@@ -18,8 +18,6 @@ NB `s3tools::accessible_buckets` is not yet implemented.
 
 This is based on the [paws library](https://paws-r.github.io/) which has the
 advantage that it's R-native and doesn't depend on reticulated Python libraries.
-However to avoid time outs it reauthenticates with AWS for every function call 
-which introduces a small amount of latency.
 
 ### Installation
 ```
