@@ -29,6 +29,8 @@ s3_gen <- function(){
   Rs3tools.temporary_authentication <- FALSE
   # Expiration of current credentials, if needed
   Rs3tools.authentication_expiry <- NULL
+  # Expiration of current credentials, if needed
+  Rs3tools.region <- NULL
 
   ## Returns a function which both returns the required s3 object
   ## and super assigns it (and the other state variables) to the variables above
@@ -39,8 +41,18 @@ s3_gen <- function(){
         (Rs3tools.temporary_authentication
          & expired_auth(Rs3tools.authentication_expiry))) {
 
-      if (!is.null(Rs3tools.s3)) message("Refreshing credentials with AWS")
-      if (is.null(region)) region <- get_region()
+      # If there is already an s3 instance then we must be refreshing
+      # so we tell the user, and also use the previous region, unless
+      # it has been provided explicitly (i.e. region is not NULL)
+      if (!is.null(Rs3tools.s3)) {
+       message("Refreshing credentials with AWS")
+       if (is.null(region)) region <- Rs3tools.region
+      } else {
+        if (is.null(region)) region <- get_region()
+      }
+      # set the region state variable to the region used
+      Rs3tools.region <<- region
+
       aws_role_arn <- Sys.getenv('AWS_ROLE_ARN')
       aws_web_identity_token_file <- Sys.getenv('AWS_WEB_IDENTITY_TOKEN_FILE')
 
