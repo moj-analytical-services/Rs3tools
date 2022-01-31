@@ -20,15 +20,19 @@ documentation
 
 Additionally there is a function `write_using`, e.g.
 ```R
-write_using(
+Rs3tools::write_using(
   my_dataframe, 
   feather::write_feather, 
-  "alpha-everyone/delete/my_feather.feather",
+  "alpha-my-bucket/my_feather.feather",
   overwrite=TRUE,
   multipart=TRUE
 )
 ```
-
+AWS authentication credentials will refresh automatically but if there is a 
+then you can refresh them with
+```R
+Rs3tools::refresh_credentials()
+```
 NB `s3tools::accessible_buckets` is not implemented.
 
 ### Installation
