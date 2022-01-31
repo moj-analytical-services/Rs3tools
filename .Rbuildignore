@@ -1,6 +1,6 @@
 ^requirements\.txt$
 ^renv$
 ^renv\.lock$
-^labs3tools\.Rproj$
+^Rs3tools\.Rproj$
 ^\.Rproj\.user$
 ^LICENSE\.md$
