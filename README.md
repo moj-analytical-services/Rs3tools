@@ -11,7 +11,7 @@ advantage that it's R-native and doesn't depend on reticulated Python libraries.
 Please note that this is not officially supported by the AP team and is 
 intended to be community supported.
 
-### What does this do?
+## What does this do?
 This library is mostly compatible with `s3tools`, which is being retired as we
 migrate to the new version of the Analytical Platform, so you can replace 
 `s3tools` with `Rs3tools` in your code and you should be good to go. For
@@ -28,7 +28,7 @@ Rs3tools::write_using(
   multipart=TRUE
 )
 ```
-AWS authentication credentials will refresh automatically but if there is a 
+AWS authentication credentials will refresh automatically but if there is problem a 
 then you can refresh them with
 ```R
 Rs3tools::refresh_credentials()
