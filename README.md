@@ -28,7 +28,7 @@ Rs3tools::write_using(
   multipart=TRUE
 )
 ```
-AWS authentication credentials will refresh automatically but if there is problem a 
+AWS authentication credentials will refresh automatically but if there is a problem
 then you can refresh them with
 ```R
 Rs3tools::refresh_credentials()
