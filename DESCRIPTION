@@ -1,6 +1,6 @@
 Package: Rs3tools
 Title: Helper tools to access Amazon S3, compatible with s3tools
-Version: 0.4.0
+Version: 0.4.1
 Authors@R: 
     c(person(given = "Mike",
              family = "Ratford",
