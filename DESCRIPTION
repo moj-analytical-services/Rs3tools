@@ -34,7 +34,8 @@ Imports:
     tools,
     utils,
     httr,
-    readr
+    readr,
+    rlang
 Suggests: 
     testthat (>= 3.0.0),
     nycflights13,
