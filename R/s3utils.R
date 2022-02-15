@@ -73,6 +73,11 @@ s3_gen <- function(){
           "&Version=2011-06-15"
         )
         response <- httr::POST(query)
+
+        if (!is.null(httr::content(response)$Error$Message)) rlang::abort(c("Something went wrong getting temporary credentials",
+                                                                            "*" = "The message from https://sts.amazonaws.com/ is:",
+                                                                            "i" = httr::content(response)$Error$Message))
+
         credentials <- httr::content(response)$AssumeRoleWithWebIdentityResponse$AssumeRoleWithWebIdentityResult$Credentials
         Rs3tools.temporary_authentication <<- TRUE
         Rs3tools.authentication_expiry <<-
