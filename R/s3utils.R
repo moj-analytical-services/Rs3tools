@@ -99,7 +99,7 @@ s3_gen <- function(){
 
         # This doesn't specify the configuration except the region
         # so paws will use its own default methods to choose the auth
-        Rs3tools.s3 <<- paws::s3(config=list(region=REGION))
+        Rs3tools.s3 <<- paws::s3(config=list(region=region))
 
       }
     }
