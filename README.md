@@ -28,6 +28,33 @@ Rs3tools::write_using(
   multipart=TRUE
 )
 ```
+You can also use `write_using` to write .xlsx files, e.g.
+```R
+Rs3tools::write_using(
+  my_dataframe, 
+  openxlsx::write.xlsx, 
+  "alpha-my-bucket/my_excel.xlsx",
+  sheetName = "mysheetName",
+  overwrite=TRUE
+)
+```
+However, note that you can't append multiple sheets in the same excel file/workbook.
+For that, you can create a workbook in your local session space, add multiple sheets
+and data to them, and save the workbook in local session space. Only then write the 
+workbook to s3 using `write_file_to_s3`, e.g.
+```R
+library(openxlsx)
+wb <- createWorkbook()
+addWorksheet(wb, sheet = "mysheet1") 
+addWorksheet(wb, sheet = "mysheet2")
+writeData(wb, "mysheet1", df1, startRow = 1, startCol = 1)
+writeData(wb, "mysheet2", df2, startRow = 1, startCol = 1)
+saveWorkbook(wb, file = "my_excelwb.xlsx", overwrite = TRUE)
+
+#write file to s3 using `write_file_to_s3`function
+Rs3tools::write_file_to_s3("my_excelwb.xlsx", "alpha-my-bucket/my_excelwb.xlsx", overwrite=TRUE)
+```
+
 AWS authentication credentials will refresh automatically but if there is a problem
 then you can refresh them with
 ```R
