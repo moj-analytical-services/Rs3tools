@@ -18,7 +18,7 @@ read_using <- function(FUN, s3_path, ...) {
     }
   )
 
-  fext <- tools::file_ext(p$key)
+  fext <- dot_file_ext(p$key)
   tmp_location <- tempfile(fileext = fext)
   writeBin(obj$Body, con = tmp_location)
   on.exit(unlink(tmp_location))

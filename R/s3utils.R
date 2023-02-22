@@ -144,3 +144,7 @@ s3_file_exists <- function(s3_path) {
   )
   return(exists)
 }
+
+dot_file_ext <- function(path) {
+  paste0('.', tools::file_ext(path))
+}

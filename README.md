@@ -1,6 +1,6 @@
 # Rs3tools
 
-Helper tools to access Amazon S3 on the Analytical Platform, compatible with 
+Helper tools to access Amazon S3 on the Analytical Platform, mostly compatible with 
 [s3tools](https://github.com/moj-analytical-services/s3tools). 
 
 This is based on 
@@ -10,6 +10,15 @@ advantage that it's R-native and doesn't depend on reticulated Python libraries.
 ## Warning
 Please note that this is not officially supported by the AP team and is 
 intended to be community supported.
+
+## Installation
+```
+renv::install("moj-analytical-services/Rs3tools")
+```
+otherwise
+```
+remotes::install_github("moj-analytical-services/Rs3tools")
+```
 
 ## What does this do?
 This library is mostly compatible with `s3tools`, which is being retired as we
@@ -28,6 +37,9 @@ Rs3tools::write_using(
   multipart=TRUE
 )
 ```
+
+### Writing Excel files
+
 You can also use `write_using` to write .xlsx files, e.g.
 ```R
 Rs3tools::write_using(
@@ -55,21 +67,17 @@ saveWorkbook(wb, file = "my_excelwb.xlsx", overwrite = TRUE)
 Rs3tools::write_file_to_s3("my_excelwb.xlsx", "alpha-my-bucket/my_excelwb.xlsx", overwrite=TRUE)
 ```
 
+### Athentication
+
 AWS authentication credentials will refresh automatically but if there is a problem
 then you can refresh them with
 ```R
 Rs3tools::refresh_credentials()
 ```
-NB `s3tools::accessible_buckets` is not implemented.
 
-### Installation
-```
-renv::install("moj-analytical-services/Rs3tools")
-```
-otherwise
-```
-remotes::install_github("moj-analytical-services/Rs3tools")
-```
+### s3tools incompatibility
+
+`s3tools::accessible_buckets` is not implemented.
 
 ## s3tools guidance
 
