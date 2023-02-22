@@ -50,7 +50,7 @@ write_file_to_s3 <- function(local_file_path, s3_path, overwrite=FALSE, multipar
 #' @examples write_using(my_dataframe, readr::write_csv, "alpha-everyone/delete/my_csv.csv")
 #' @examples write_using(my_dataframe, feather::write_feather, "alpha-everyone/delete/my_feather.feather")
 write_using <- function(x, f, s3_path, overwrite=FALSE, multipart=TRUE, ...) {
-  fext <- tools::file_ext(s3_path)
+  fext <- dot_file_ext(s3_path)
   tmp_location <- tempfile(fileext = fext)
   f(x, tmp_location, ...)
   write_file_to_s3(tmp_location, s3_path, overwrite = overwrite,
