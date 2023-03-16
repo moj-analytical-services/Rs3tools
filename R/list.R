@@ -48,9 +48,10 @@ list_files_in_bucket <- function(bucket, prefix=NULL, max=NULL) {
     )
 
     files_t <- objects$Contents %>%
-      # Remove the Owner as it's unused and contains two values
-      # which duplicates the tibble
-      purrr::map(function(c) { c$Owner = NULL; c }) %>%
+      # Remove the nested list elements
+      # (as of paws 0.2.0 theses Owner and ChecksumAlgorithm)
+      # as they stop the data being cast to a tibble
+      purrr::map(function(x) purrr::discard(x, is.list)) %>%
       # Convert from lists into tibble rows
       purrr::map(tibble::as_tibble) %>%
       # and merge the rows
