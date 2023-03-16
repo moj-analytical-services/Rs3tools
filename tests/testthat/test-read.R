@@ -49,3 +49,11 @@ test_that("write_read_using works", {
     flights
   )
 })
+
+test_that("we can list the files written", {
+  expect_equal(
+    list_files_in_bucket(BUCKET, prefix = "Rs3tools/flights") %>%
+      dplyr::pull(filename) %>%
+      sort(),
+    c("flights.csv", "flights.dta", "flights.feather", "flights.sas7bdat", "flights.sav", "flights.xlsx"))
+})
