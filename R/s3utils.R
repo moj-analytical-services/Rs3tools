@@ -18,8 +18,8 @@ expired_auth <- function(expiry_t, window = 5 * 60) {
 #   underlying running environment e.g. cluster, and they cannot be amended
 # othewise use 'eu-west-1' as the default
 get_region <- function() {
-  if (nchar(Sys.getenv("AWS_ATHENA_QUERY_REGION")) > 0) {
-    return(Sys.getenv("AWS_ATHENA_QUERY_REGION"))
+  if (nchar(Sys.getenv("AWS_BUCKET_REGION")) > 0) {
+    return(Sys.getenv("AWS_BUCKET_REGION"))
   } else if (nchar(Sys.getenv("AWS_DEFAULT_REGION")) > 0) {
     return(Sys.getenv("AWS_DEFAULT_REGION"))
   } else if (nchar(Sys.getenv("AWS_REGION")) > 0) {
