@@ -47,34 +47,38 @@ list_files_in_bucket <- function(bucket, prefix=NULL, max=NULL) {
       }
     )
 
-    files_t <- objects$Contents %>%
-      # Remove the nested list elements
-      # (as of paws 0.2.0 theses Owner and ChecksumAlgorithm)
-      # as they stop the data being cast to a tibble
-      purrr::map(function(x) purrr::discard(x, is.list)) %>%
-      # Convert from lists into tibble rows
-      purrr::map(tibble::as_tibble) %>%
-      # and merge the rows
-      dplyr::bind_rows() %>%
-      # Add the extra s3tools fields
-      dplyr::mutate(
-        # Lose the trailing "/" for directories
-        # (directories are shown in the filenames in s3tools)
-        Key = stringr::str_replace(Key, "/$", ""),
-        filename = stringr::str_extract(Key, "[^/]*$"),
-        path = glue::glue("{bucket}/{Key}"),
-        size_readable = gdata::humanReadable(Size),
-        bucket = bucket
-      ) %>%
-      dplyr::select(
-        filename, path, size_readable,
-        key = Key,
-        lastmodified = LastModified,
-        etag = ETag,
-        size = Size,
-        storageclass = StorageClass,
-        bucket
-      )
+    if (objects$KeyCount > 0) {
+      files_t <- objects$Contents %>%
+        # Remove the nested list elements
+        # (as of paws 0.2.0 theses Owner and ChecksumAlgorithm)
+        # as they stop the data being cast to a tibble
+        purrr::map(function(x) purrr::discard(x, is.list)) %>%
+        # Convert from lists into tibble rows
+        purrr::map(tibble::as_tibble) %>%
+        # and merge the rows
+        dplyr::bind_rows() %>%
+        # Add the extra s3tools fields
+        dplyr::mutate(
+          # Lose the trailing "/" for directories
+          # (directories are shown in the filenames in s3tools)
+          Key = stringr::str_replace(Key, "/$", ""),
+          filename = stringr::str_extract(Key, "[^/]*$"),
+          path = glue::glue("{bucket}/{Key}"),
+          size_readable = gdata::humanReadable(Size),
+          bucket = bucket
+        ) %>%
+        dplyr::select(
+          filename, path, size_readable,
+          key = Key,
+          lastmodified = LastModified,
+          etag = ETag,
+          size = Size,
+          storageclass = StorageClass,
+          bucket
+        )
+    } else {
+      files_t <- tibble::tibble()
+    }
 
     if (is.null(result)) {
       result <- files_t
