@@ -19,6 +19,10 @@ otherwise
 ```
 remotes::install_github("moj-analytical-services/Rs3tools")
 ```
+To update to the latest version run
+```
+renv::update("Rs3tools")
+```
 
 ## What does this do?
 This library is mostly compatible with `s3tools`, which is being retired as we
