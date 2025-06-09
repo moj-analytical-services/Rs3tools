@@ -53,6 +53,8 @@ list_files_in_bucket <- function(bucket, prefix=NULL, max=NULL) {
         # (as of paws 0.2.0 theses Owner and ChecksumAlgorithm)
         # as they stop the data being cast to a tibble
         purrr::map(function(x) purrr::discard(x, is.list)) %>%
+        # Replace NULL vales with NA
+        purrr::map(\(l) purrr::map(l, \(x) ifelse(is.null(x), NA, x)))
         # Convert from lists into tibble rows
         purrr::map(tibble::as_tibble) %>%
         # and merge the rows
